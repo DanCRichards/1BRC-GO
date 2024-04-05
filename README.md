@@ -137,3 +137,25 @@ This increase in speed is negligible I am willing to ignore it at this stage. Bu
 
 ### Possible Improvements
 I wanted to consider how changing the file scanning would work. [Time to start reading about bufio.scaner](https://medium.com/golangspec/in-depth-introduction-to-bufio-scanner-in-golang-55483bb689b4)
+
+
+# Scanning the file 
+
+```go
+	for scanner.Scan() {
+    scanner.Text() // or 
+    scanner.Bytes()
+}
+```
+
+1. Bytes 28s
+2. Text 31.651927s
+Not much difference between the two!
+
+
+> Note I just spent the last few hours understanding how channels, mutexs and how the go runtime works!
+ 
+
+
+ 
+ 

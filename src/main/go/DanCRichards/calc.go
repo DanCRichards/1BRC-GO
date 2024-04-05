@@ -33,66 +33,85 @@ func getMax(a, b float64) float64 {
 	}
 }
 
-func main() {
-	started := time.Now()
-	myCode()
-	fmt.Printf("%0.6f", time.Since(started).Seconds())
+func getFile(fileName string) (file *os.File) {
+	// Open File
+	file, fileError := os.Open(fileName)
+	if fileError != nil {
+		panic(fileError)
+	}
+
+	return file
 }
 
-func myCode() {
+func main() {
 	if len(os.Args) < 2 {
 		panic("No arguments")
 	}
 	fileName := os.Args[1]
 
-	// Open File
-	file, fileError := os.Open(fileName)
-	defer file.Close() // This will close the file after the function has been run.
-	if fileError != nil {
-		panic(fileError)
-	}
+	started := time.Now()
+	file := getFile(fileName)
+
+	iterateThroughFile(file)
+	fmt.Printf("%0.6f", time.Since(started).Seconds())
+
+	file.Close()
+}
+
+func consumer(channel chan []byte) {
+	<-channel
+}
+
+func iterateThroughFile(file *os.File) {
+
+	channel := make(chan []byte) // SYNC
+	go consumer(channel)
 
 	// Start processing the records
-
-	stations := make(map[string]*StationData)
-
-	scanner := bufio.NewScanner(file)
-
-	for scanner.Scan() {
-
-		line := scanner.Text()
-		parts := strings.Split(line, ";")
-
-		stationName := parts[0]
-		// To do, change float to int
-		temp, parseError := strconv.ParseFloat(parts[1], 64)
-
-		if parseError != nil {
-			fmt.Printf("Error parsing float on line, " + line)
-			panic(parseError)
+	//stations := make(map[string]*StationData)
+	bufferSize := 256
+	buffer := make([]byte, bufferSize*bufferSize)
+	for {
+		_, err := file.Read(buffer)
+		if err != nil {
+			panic(err)
 		}
-
-		station := stations[stationName]
-		if station == nil {
-			stations[stationName] = &StationData{temp, temp, temp, 1}
-		} else {
-			station.count += 1
-			station.total += temp
-			if station.min > temp {
-				station.min = temp
-			}
-			if station.max < temp {
-				station.max = temp
-			}
-		}
-
 	}
 
+}
+
+func printRecords(stations map[string]*StationData) {
 	for key, value := range stations {
 		average := value.total / float64(value.count)
 		fmt.Printf("%s=%f/%f/%f\n", key, value.min, value.max, average)
 	}
+}
 
+func processRecord(line string, stations map[string]*StationData) {
+	parts := strings.Split(line, ";")
+	stationName := parts[0]
+	// To do, change float to int
+	temp, parseError := strconv.ParseFloat(parts[1], 64)
+
+	if parseError != nil {
+		fmt.Printf("Error parsing float on line, " + line)
+		panic(parseError)
+	}
+
+	station := stations[stationName]
+	if station == nil {
+		stations[stationName] = &StationData{temp, temp, temp, 1}
+	} else {
+		station.count += 1
+		station.total += temp
+		if station.min > temp {
+			station.min = temp
+		}
+		if station.max < temp {
+			station.max = temp
+		}
+
+	}
 }
 
 type StnData struct {
