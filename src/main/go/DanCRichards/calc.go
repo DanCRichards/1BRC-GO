@@ -4,19 +4,20 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
 )
 
 type StationData struct {
-	min   int
-	max   int
-	total int
+	min   float64
+	max   float64
+	total float64
 	count int
 }
 
-func getMin(a, b int) int {
+func getMin(a, b float64) float64 {
 	if a < b {
 		return a
 	} else {
@@ -24,7 +25,7 @@ func getMin(a, b int) int {
 	}
 }
 
-func getMax(a, b int) int {
+func getMax(a, b float64) float64 {
 	if a > b {
 		return a
 	} else {
@@ -35,6 +36,7 @@ func getMax(a, b int) int {
 func main() {
 	started := time.Now()
 	run()
+	reference()
 	fmt.Printf("%0.6f", time.Since(started).Seconds())
 }
 
@@ -64,7 +66,7 @@ func run() {
 
 		stationName := parts[0]
 		// To do, change float to int
-		temp, parseError := strconv.Atoi(strings.ReplaceAll(parts[1], ".", ""))
+		temp, parseError := strconv.ParseFloat(parts[1], 64)
 
 		if parseError != nil {
 			fmt.Printf("Error parsing float on line, " + line)
@@ -83,8 +85,72 @@ func run() {
 	}
 
 	for key, value := range stations {
-		average := value.total / value.count
-		fmt.Printf("%s=%f/%f/%f\n", key, value.min/10, value.max/10, average/10)
+		average := value.total / float64(value.count)
+		fmt.Printf("%s=%f/%f/%f\n", key, value.min, value.max, average)
 	}
 
+}
+
+type StnData struct {
+	Name  string
+	Min   float64
+	Max   float64
+	Sum   float64
+	Count int
+}
+
+func reference() {
+	data := make(map[string]*StnData)
+
+	file, err := os.Open("measurements.txt")
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		line := scanner.Text()
+		parts := strings.Split(line, ";")
+		name := parts[0]
+		tempStr := strings.Trim(parts[1], "\n")
+
+		temperature, err := strconv.ParseFloat(tempStr, 64)
+		if err != nil {
+			panic(err)
+		}
+
+		station, ok := data[name]
+		if !ok {
+			data[name] = &StnData{name, temperature, temperature, temperature, 1}
+		} else {
+			if temperature < station.Min {
+				station.Min = temperature
+			}
+			if temperature > station.Max {
+				station.Max = temperature
+			}
+			station.Sum += temperature
+			station.Count++
+		}
+	}
+
+	printResult(data)
+}
+
+func printResult(data map[string]*StnData) {
+	result := make(map[string]*StnData, len(data))
+	keys := make([]string, 0, len(data))
+	for _, v := range data {
+		keys = append(keys, v.Name)
+		result[v.Name] = v
+	}
+	sort.Strings(keys)
+
+	print("{")
+	for _, k := range keys {
+		v := result[k]
+		fmt.Printf("%s=%.1f/%.1f/%.1f, ", k, v.Min, v.Sum/float64(v.Count), v.Max)
+	}
+	print("}\n")
 }
