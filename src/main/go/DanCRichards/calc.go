@@ -78,8 +78,12 @@ func myCode() {
 		} else {
 			station.count += 1
 			station.total += temp
-			station.min = getMin(station.min, temp)
-			station.max = getMax(station.min, temp)
+			if station.min > temp {
+				station.min = temp
+			}
+			if station.max < temp {
+				station.max = temp
+			}
 		}
 
 	}

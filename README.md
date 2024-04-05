@@ -16,6 +16,7 @@
 | 1         | Simple Single Threaded                                                                                                                        | 308.678428 |             |
 | 2         | Simple Single Threaded (Integers)                                                                                                             | 354.827043 |             | 
 | 3         | Accessing the Map once per line                                                                                                               | 200.885222 |             | 
+| 4         | One stack frame per line                                                                                                                      | 204.891398 |             | 
 
 ------
 
@@ -52,7 +53,7 @@ In order of easier to implement....
 - Consider different file scanning options
 
 
-### Comparison to an online article 
+## Comparison to an online article 
 I am using [this article](https://r2p.dev/b/2024-03-18-1brc-go/#:~:text=One%20Billion%20Row%20Challenge%20in%20Golang%20%2D%20From%2095s%20to%201.96sthis) as a guide for helping me develop my code and understand the different aspects of the go language. 
 I noticed that this person's code was run in 96 seconds (when run on my computer 217), now obviously I cannot account for differences in hardware... So I will run his code on my MacBook Pro M1 2019 to see how my code compares to his.  
 
@@ -126,5 +127,13 @@ func myCode() {
 }
 ```
 
+## 4 - Removing function calls and keeping it in once stack frame per line.
+
+### Processing Time: 204.891398
+
+> This is such a small impact that quite frankly I think the environment of me doing other tasks likely impacted this. 
+This increase in speed is negligible I am willing to ignore it at this stage. But to be considered in the future. 
 
 
+### Possible Improvements
+I wanted to consider how changing the file scanning would work. [Time to start reading about bufio.scaner](https://medium.com/golangspec/in-depth-introduction-to-bufio-scanner-in-golang-55483bb689b4)
