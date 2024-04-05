@@ -1,0 +1,102 @@
+Alto Piquiri;37.5
+Alto Piquiri;37.5
+Santo Domingo;20.8
+Santo Domingo;10.4
+Roermond;98.0
+Cide;-1.0
+Sartrouville;-66.2
+West Norriton;56.2
+Shuangqiao;-58.6
+Vianden;55.3
+Nybro;11.7
+Siping;-12.9
+Goiana;11.9
+Mount Olive;48.3
+Bafwasende;65.9
+Mālingaon;-15.5
+Berga;-81.8
+Bijāwar;-29.3
+Pallāvaram;-54.5
+Alabang;-89.1
+Kuldīga;-6.8
+Pomfret;66.3
+Codru;38.0
+Kannānendal;-28.5
+Ghulja;-75.6
+Cuencamé de Ceniceros;80.3
+Scherpenzeel;-26.1
+Bourdoud;28.2
+Narlıca;-62.5
+Wasquehal;20.8
+Frederickson;-99.0
+Mold;70.9
+Bermeo;-79.2
+Neuenhof;94.9
+San Alejo;36.6
+Jeannette;-43.7
+Foligno;59.3
+Punturin;38.5
+Piura;-69.0
+Pontypridd;40.3
+Ceres;17.9
+Le Pecq;25.8
+Teolo;31.5
+Marmaris;40.6
+Aiea;89.6
+Naraura;33.6
+Kurate;96.9
+Maputo;-68.5
+Thaba-Tseka;-27.3
+Kansas City;-43.8
+Bārīgarh;-10.6
+Bandırma;-53.8
+Hârlău;29.5
+Guaraniaçu;82.8
+Hässleholm;-45.0
+Burgess Hill;78.2
+Tangdong;-30.8
+Chambas;-88.7
+Cajamarca;-64.6
+Viqueque;93.3
+Calulo;-54.6
+Yıldırım;90.3
+Fish Hawk;36.9
+Sidi Ettiji;-95.5
+San Andrés del Rabanedo;51.4
+Badagabettu;-30.6
+Fleming Island;24.2
+Isny im Allgäu;8.3
+Butler;-21.4
+Ndora;-98.7
+Carpi;27.3
+Suchanino;8.2
+Gavardo;87.3
+Rocklin;-28.6
+Alabat;53.7
+Ware;46.2
+Oberhausen-Rheinhausen;-84.3
+Villa El Carmen;-34.6
+Ban Pet;24.9
+Tsavo;48.3
+Suva;-6.8
+Mocha;-34.4
+Gangūru;58.5
+Nantan;-79.5
+Minot;96.4
+Ruislip;24.0
+Tešanj;12.5
+Tāsgaon;-24.2
+Pathra;66.9
+Guachavés;-61.6
+Cuya;-62.2
+Tournan-en-Brie;-30.0
+Makouda;47.3
+Frickenhausen;-61.4
+Pitlam;10.1
+Thakhèk;90.8
+Turiaçu;-26.4
+Yamato;-36.0
+Palma di Montechiaro;-66.5
+Chachagüí;-60.0
+Nattakkādaiyūr;66.8
+Stellenbosch;-76.3
