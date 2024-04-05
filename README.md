@@ -10,20 +10,49 @@
 
 | Iteration | Title                             | Duration    | Improvement |
 |-----------|-----------------------------------|-------------| ------------|
-| 1         | Simple Single Threaded            | 308.678428  |
-| 2         | Simple Single Threaded (Integers) | 308.678428  |
+| 1         | Simple Single Threaded            | 308.678428  |             |
+| 2         | Simple Single Threaded (Integers) | 354.827043  |  
 
 
 
 
-## Simple Single Threaded
+## 1 - Simple Single Threaded
 
 > **Duration** 308.678428s  - Not that good
   
   
-> My intention with this was to simply get some code working and see how she went! 
+> My intention with this was to simply get some code working and see how she went! This very much goes along the lines of red, green refactor. 
+> Although in this repository I won't be using test cases... Just simply getting it to work and seeing how I do was important.
 
 
-I didn't think that this would be so bad... But after about 2 minutes of processing I knew my code was pretty poor. 
+### Reaction
+- My first reaction was that it was going to be slow, I noticed that some other programs were processing it in 90s vs my 308 seconds. So something must be quite wrong here. Likely to do with the use of the scanner.
 
-My first item was to look into not parsing the values as a float and simply treating them as integers
+
+
+### Possible improvements
+In order of easier to implement.... 
+- Use integers and / 10 at the end 
+- Use buffers for injecting the input 
+- Use concurrency to use more than one core to
+
+
+-------
+
+
+## 2 - Simple Single Threaded - Using integers
+
+### Reaction
+
+- IT WENT BACKWARDS!? 
+- Put it back into floats for the moment I guess. I'm still not convinced
+
+### Possible Improvements 
+- Use float...
+- Consider different file scanning options
+
+-------
+
+
+
+
