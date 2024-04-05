@@ -10,12 +10,12 @@
 
 ## Runtime table 
 
-| Iteration | Title                                                                                                                                        | Duration   | Improvement |
-|-----------|----------------------------------------------------------------------------------------------------------------------------------------------|------------| ------------|
+| Iteration | Title                                                                                                                                         | Duration   | Improvement |
+|-----------|-----------------------------------------------------------------------------------------------------------------------------------------------|------------| ------------|
 | 0         | [Reference Code](https://r2p.dev/b/2024-03-18-1brc-go/#:~:text=One%20Billion%20Row%20Challenge%20in%20Golang%20%2D%20From%2095s%20to%201.96s) | 217.976069 |             |
-| 1         | Simple Single Threaded                                                                                                                       | 308.678428 |             |
-| 2         | Simple Single Threaded (Integers)                                                                                                            | 354.827043 |             | 
-| 3         | Accessing the Map once per line                                                                                                              | 238.850493 |             | 
+| 1         | Simple Single Threaded                                                                                                                        | 308.678428 |             |
+| 2         | Simple Single Threaded (Integers)                                                                                                             | 354.827043 |             | 
+| 3         | Accessing the Map once per line                                                                                                               | 200.885222 |             | 
 
 ------
 
@@ -70,10 +70,10 @@ I noticed whilst removing the getMin and getMax functions. I am not certain how 
 > As per the text above when comparing the reference code to my code.. I saw the first point of call was that the reference code was not calling a separate function for getting the min/Max temperature. However whilst pulling out the code to do this I saw that I accessed the map multiple times per weather station which inherently seems inefficient to me. Lets see what happens if I get the weather station data once per line of the text. 
 
 
-### **Processing Time**: 238 Seconds
+### **Processing Time**: 200.885222 Seconds
 
 ```go
-func myCode(){
+func myCode() {
     if len(os.Args) < 2 {
         panic("No arguments")
     }
@@ -94,27 +94,27 @@ func myCode(){
 
     for scanner.Scan() {
 
-        line := scanner.Text()
-        parts := strings.Split(line, ";")
+    line := scanner.Text()
+    parts := strings.Split(line, ";")
 
-        stationName := parts[0]
-        // To do, change float to int
-        temp, parseError := strconv.ParseFloat(parts[1], 64)
+    stationName := parts[0]
+    // To do, change float to int
+    temp, parseError := strconv.ParseFloat(parts[1], 64)
 
-        if parseError != nil {
-            fmt.Printf("Error parsing float on line, " + line)
-            panic(parseError)
-        }
+    if parseError != nil {
+        fmt.Printf("Error parsing float on line, " + line)
+        panic(parseError)
+    }
 
-        station := stations[stationName]
-        if station == nil {
-            stations[stationName] = &StationData{temp, temp, temp, 1}
-        } else {
-            station.count += 1
-            station.total += temp
-            station.min = getMin(stations[stationName].min, temp)
-            station.max = getMax(stations[stationName].min, temp)
-        }
+    station := stations[stationName]
+    if station == nil {
+        stations[stationName] = &StationData{temp, temp, temp, 1}
+    } else {
+        station.count += 1
+        station.total += temp
+        station.min = getMin(station.min, temp)
+        station.max = getMax(station.min, temp)
+    }
 
     }
 
@@ -122,6 +122,7 @@ func myCode(){
         average := value.total / float64(value.count)
         fmt.Printf("%s=%f/%f/%f\n", key, value.min, value.max, average)
     }
+
 }
 ```
 
