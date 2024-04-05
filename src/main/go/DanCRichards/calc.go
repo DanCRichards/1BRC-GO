@@ -35,12 +35,11 @@ func getMax(a, b float64) float64 {
 
 func main() {
 	started := time.Now()
-	run()
-	reference()
+	myCode()
 	fmt.Printf("%0.6f", time.Since(started).Seconds())
 }
 
-func run() {
+func myCode() {
 	if len(os.Args) < 2 {
 		panic("No arguments")
 	}
@@ -73,13 +72,14 @@ func run() {
 			panic(parseError)
 		}
 
-		if stations[stationName] == nil {
+		station := stations[stationName]
+		if station == nil {
 			stations[stationName] = &StationData{temp, temp, temp, 1}
 		} else {
-			stations[stationName].count += 1
-			stations[stationName].total += temp
-			stations[stationName].min = getMin(stations[stationName].min, temp)
-			stations[stationName].max = getMax(stations[stationName].min, temp)
+			station.count += 1
+			station.total += temp
+			station.min = getMin(stations[stationName].min, temp)
+			station.max = getMax(stations[stationName].min, temp)
 		}
 
 	}
@@ -99,10 +99,10 @@ type StnData struct {
 	Count int
 }
 
-func reference() {
+func referenceCode() {
 	data := make(map[string]*StnData)
 
-	file, err := os.Open("measurements.txt")
+	file, err := os.Open(os.Args[1])
 	if err != nil {
 		panic(err)
 	}
