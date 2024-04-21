@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
 	"sort"
 	"strconv"
@@ -59,7 +60,9 @@ func main() {
 }
 
 func consumer(channel chan []byte) {
-	<-channel
+	for {
+		<-channel
+	}
 }
 
 func iterateThroughFile(file *os.File) {
@@ -73,6 +76,15 @@ func iterateThroughFile(file *os.File) {
 	buffer := make([]byte, bufferSize*bufferSize)
 	for {
 		_, err := file.Read(buffer)
+
+		data := make([]byte, bufferSize)
+		copy(data, buffer)
+		channel <- data
+
+		if err == io.EOF {
+			break
+		}
+
 		if err != nil {
 			panic(err)
 		}

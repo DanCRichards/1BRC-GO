@@ -157,5 +157,12 @@ Not much difference between the two!
  
 
 
+## 5 - Using go routines and a file.Read(buffer)
+
+```go
+
+
+```
+
  
  
